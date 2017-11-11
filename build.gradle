@@ -19,7 +19,7 @@ ext.textIoChartDemoVersion = project.version as String
 repositories {
   jcenter()
   mavenCentral()
-  maven { url 'https://jitpack.io' }
+  maven { url 'https://github.com/indvd00m/maven-repo/raw/master/repository' }
 }
 
 apply plugin: 'application'
@@ -43,6 +43,9 @@ license {
 
 dependencies {
   compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.21'
+  compile 'org.beryx:text-io:2.8.0'
+  compile 'com.indvd00m.ascii.render:ascii-render:1.2.1'
+  compile 'org.jfree:jfreechart:1.5.0'
   runtime ('ch.qos.logback:logback-classic:1.1.7')
   testCompile 'junit:junit:4.12'
   testCompile('ch.qos.logback:logback-classic:1.1.7')
@@ -51,8 +54,8 @@ dependencies {
 jar {
     manifest {
         attributes 'Implementation-Title': "text-io-chart-demo",
-                'Main-Class': 'org.beryx.textio.chart.TextIoChartDemo',
+                'Main-Class': 'org.beryx.textio.chart.TextIoAsciiChart',
                 'Implementation-Version': textIoChartDemoVersion
     }
 }
-mainClassName = 'org.beryx.textio.chart.TextIoChartDemo'
+mainClassName = 'org.beryx.textio.chart.TextIoAsciiChart'
