@@ -1,0 +1,58 @@
+plugins {
+    id 'idea'
+    id 'maven-publish'
+    id "com.github.ethankhall.semantic-versioning" version "1.1.0"
+    id "com.github.hierynomus.license" version "0.12.1"
+}
+
+project.version.with {
+    major = textIoChartDemoVersionMajor as int
+    minor= textIoChartDemoVersionMinor as int
+    patch = textIoChartDemoVersionPatch as int
+    if (project.hasProperty('textIoChartDemoVersionLabel')) {
+        preRelease = textIoChartDemoVersionLabel
+    }
+    releaseBuild = Boolean.valueOf(textIoChartDemoReleaseBuild)
+}
+ext.textIoChartDemoVersion = project.version as String
+
+repositories {
+  jcenter()
+  mavenCentral()
+  maven { url 'https://jitpack.io' }
+}
+
+apply plugin: 'application'
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'com.github.hierynomus.license'
+
+sourceCompatibility = 1.8
+group = 'org.beryx.textio.chart'
+version = textIoChartDemoVersion
+
+def defaultEncoding = 'UTF-8'
+[compileJava, compileTestJava]*.options*.encoding = defaultEncoding
+
+license {
+    header rootProject.file("license-header.txt")
+    skipExistingHeaders true
+    ignoreFailures false
+}
+
+dependencies {
+  compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.21'
+  runtime ('ch.qos.logback:logback-classic:1.1.7')
+  testCompile 'junit:junit:4.12'
+  testCompile('ch.qos.logback:logback-classic:1.1.7')
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': "text-io-chart-demo",
+                'Main-Class': 'org.beryx.textio.chart.TextIoChartDemo',
+                'Implementation-Version': textIoChartDemoVersion
+    }
+}
+mainClassName = 'org.beryx.textio.chart.TextIoChartDemo'
